@@ -18,9 +18,9 @@ FROM
   JOIN assistance_requests ON student_id = students.id
   JOIN teachers ON teachers.id = teacher_id
 WHERE
-  cohorts.name like '%${process.argv[2] || 'FEB12'}%'
+  cohorts.name like $1
 ORDER BY
   teacher;
-`)
+`, [`%${process.argv[2] || 'FEB12'}%`])
   .then(data => console.log(data.rows))
   .catch(err => console.error('query error', error.stack));
